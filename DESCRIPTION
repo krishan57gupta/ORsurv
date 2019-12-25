@@ -1,0 +1,30 @@
+Type: Package
+Package: ORsurv
+Title: Survival of patients using ors on TCGA data
+Version: 0.99.0
+Authors@R: c(person("Krishan", "Gupta", email = "krishang@iiitd.ac.in", role = c("aut","cre")), person("Debarka", "Sengupta", email = "debarka@gmail.com", role = c("aut")))
+Description: survival of patients using ors on TCGA data.
+BugReports: https://github.com/krishan57gupta/ORsurv/issues
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2
+Depends: R (>= 3.6)
+biocViews: 
+    paitentSurvival,
+    SingleCell,
+    CTC
+Imports: 
+    pheatmap, 
+    heatmap3,
+    ggplot2,
+    NMF,
+    stringr,
+    survival,
+    survminer,
+    e1071
+Suggests: 
+    knitr,
+    rmarkdown,
+    testthat
+VignetteBuilder: knitr

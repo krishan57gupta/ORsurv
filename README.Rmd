@@ -1,5 +1,18 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
 
 # ROSeq - A rank based approach to modeling gene expression
 
@@ -7,32 +20,28 @@ Author: Krishan Gupta
 
 ## Introduction
 
-ROSeq - A rank based approach to modeling gene expression with filtered
-and normalized read count matrix. Takes in the complete filtered and
-normalized read count matrix, the location of the two sub-populations
-and the number of cores to be used.
+ROSeq - A rank based approach to modeling gene expression with filtered and normalized read count matrix. Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used.
 
 ## Installation
 
-The developer version of the R package can be installed with the
-following R commands:
+The developer version of the R package can be installed with the following R commands:
 
-install\_github(“krishan57gupta/ORsurv”)
+install_github("krishan57gupta/ORsurv")
 
 ## Vignette tutorial
 
-This vignette uses a small simulated data, to demonstrate a standard
-pipeline. This vignette can be used as a tutorial as well.
+This vignette uses a small simulated data, to demonstrate a standard pipeline. This vignette can be used as a tutorial as well.
 
 ## Example
 
 Libraries need to be loaded before running.
 
-``` r
+
+```{r setup}
 library(ORsurv)
 ```
 
-``` r
+```{r data, message=FALSE,warning = FALSE,include=TRUE, cache=FALSE}
 matrix_1=matrix(-499:500,100,10)
 rownames(matrix_1)=paste("R",1:100,sep="")
 colnames(matrix_1)=paste("C",1:10,sep="")
@@ -58,20 +67,13 @@ selected_label=c(1,2,3,4,5)
 folder="~/Ahuja_Lab/EXP52_3/"
 ```
 
-``` r
+```{r main, message=FALSE,warning = FALSE, include=TRUE, cache=FALSE}
 output<-ORsurv(folder=folder,matrix_1=matrix_1,matrix_2=matrix_2,matrix_3=matrix_3,t1=t1,t2=t2,t3=t3,
          name1=name1,name2=name2,name3=name3,survival_info=survival_info,method=method,
          month_limit=month_limit,p_limit=p_limit,selected_label=selected_label)
 ```
 
-<img src="man/figures/README-main-1.png" width="100%" /><img src="man/figures/README-main-2.png" width="100%" />
-
-``` r
+```{r output, message=FALSE,warning = FALSE,include=TRUE, cache=FALSE}
 output
-#>    strata     median     lower upper
-#> 1 label=1 0.03333333        NA    NA
-#> 2 label=2 0.06666667        NA    NA
-#> 3 label=3 0.10000000        NA    NA
-#> 4 label=4 0.16666667 0.1333333    NA
-#> 5 label=5         NA        NA    NA
 ```
+
