@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# ROSeq - A rank based approach to modeling gene expression
+# ORsurv - Survival of patients using ors on TCGA data.
 
 Author: Krishan Gupta
 
