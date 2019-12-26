@@ -2,18 +2,18 @@
 % Please edit documentation in R/ORsurv.R
 \name{signature_matrix}
 \alias{signature_matrix}
-\title{A rank based approach to modeling gene expression with filtered and normalized read count matrix}
+\title{To find average of each label group}
 \usage{
 signature_matrix(mat, label)
 }
 \arguments{
-\item{mat}{The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name}
+\item{mat}{matrix for averaging}
 
-\item{label}{for the two sub-populations}
+\item{label}{a vector contains labels for each group}
 }
 \value{
-sigmat pValues A vector containing FDR adjusted p significance values
+sigmat return matrix of average vectors
 }
 \description{
-Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
+It require number of column of mat equlal to label vector size
 }

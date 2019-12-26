@@ -2,22 +2,22 @@
 % Please edit documentation in R/ORsurv.R
 \name{matrix_filter}
 \alias{matrix_filter}
-\title{A rank based approach to modeling gene expression with filtered and normalized read count matrix}
+\title{filtering matrices on the bass of common row and columns}
 \usage{
 matrix_filter(matrix_1, matrix_2, matrix_3, survival_info)
 }
 \arguments{
-\item{matrix_1}{The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name}
+\item{matrix_1}{zfpkm single sell matrix}
 
-\item{matrix_2}{Labels for the two sub-populations}
+\item{matrix_2}{tpm single cell matrix, same samples as in matrix_1}
 
-\item{matrix_3}{Labels for the two sub-populations}
+\item{matrix_3}{tpm bulk TCGA matrix}
 
-\item{survival_info}{optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation}
+\item{survival_info}{survival info as two vector matrix, first vector as time and secondd as event}
 }
 \value{
-filtered_matrix pValues A vector containing FDR adjusted p significance values
+filtered_matrix would return list of all matrices on common row as columns names
 }
 \description{
-Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
+requires four matrices two for single cell and one for bulk, and  one for survival info to filter on same samples and features
 }

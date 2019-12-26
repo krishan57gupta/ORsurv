@@ -1,20 +1,20 @@
 ##' @title survival of patients using ors on TCGA data
 ##' @description survival of patients using ors on TCGA data
-##' @param folder The normalised and filtered
-##' @param matrix_1 The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name
-##' @param matrix_2 Labels for the two sub-populations
-##' @param matrix_3 optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation
-##' @param t1 Labels for the two sub-populations
-##' @param t2 optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation
-##' @param t3 The number of cores to be used
-##' @param name1 The number of cores to be used
-##' @param name2 Labels for the two sub-populations
-##' @param name3 optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation
-##' @param survival_info The number of cores to be used
-##' @param method The number of cores to be used
-##' @param month_limit Labels for the two sub-populations
-##' @param p_limit optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation
-##' @param selected_label The number of cores to be used
+##' @param folder dir name to save pdf files
+##' @param matrix_1 zfpkm single sell matrix
+##' @param matrix_2 tpm single cell matrix, same samples as in matrix_1
+##' @param matrix_3 tpm bulk TCGA matrix
+##' @param t1 cutoff for 0 and 1
+##' @param t2 number of clusters on bianry matrix of single cell zfpkm
+##' @param t3 number of clusters on projected matrix of single cells and bulk cells
+##' @param name1 for binary matrix
+##' @param name2 for projected matrix plots
+##' @param name3 for survival plots
+##' @param survival_info for survival info
+##' @param method for pair-wise similarity method name
+##' @param month_limit keeping survival info till specfic months, means number of months
+##' @param p_limit therosld to selecte clusters where pair-wise p val is less
+##' @param selected_label to pass already known cluster names out of all clusters
 ##' @return surv_plot pValues A vector containing FDR adjusted p significance values
 ##' @export surv_med
 ORsurv<-function(folder,matrix_1,matrix_2,matrix_3,t1=-3,t2=3,t3=3,name1="EXP",name2="EXP_TCGA",name3="Survival_plot",survival_info,method,month_limit,p_limit=2,selected_label)
@@ -27,20 +27,20 @@ ORsurv<-function(folder,matrix_1,matrix_2,matrix_3,t1=-3,t2=3,t3=3,name1="EXP",n
   surv_med=survival_plot(folder=folder,mat=corr_mat,mat_2=data$TCGA_TPM,s=data$survival_info,t=t3,name2=name2,name3=name3,month_limit=month_limit,p_limit=p_limit,selected_label=selected_label)
   return(surv_med)
 }
-##' @title A rank based approach to modeling gene expression with filtered and normalized read count matrix
-##' @description Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
-##' @param B optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation
-##' @param A optional, 10 as more accuracy
-##' @return cos_sim pValues A vector containing FDR adjusted p significance values
+##' @title cosine similarity formula
+##' @description requires two matrices to find pair-wise cosine similarity
+##' @param B First matrix
+##' @param A Second matrix
+##' @return cos_sim would return a matrix of pair-wise cosine similarity
 cosine_formula<-function(A,B)
 {
   cos_sim=sum(A*B)/sqrt(sum(A^2)*sum(B^2))
   return(cos_sim)
 }
-##' @title A rank based approach to modeling gene expression with filtered and normalized read count matrix
-##' @description Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
-##' @param labels optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation
-##' @return new_color pValues A vector containing FDR adjusted p significance values
+##' @title finding colours for labels
+##' @description requirs labels to find colors for same
+##' @param labels labels to which colours is required
+##' @return new_color would return list of colurs on the basis number labels'colour required
 color_map<-function(labels)
 {
   all_color=list("1"="red","2"="green","3"="blue","4"="black","5"="yellow","6"="orange","7"="purple","8"="violet","9"="gold","10"="pink")
@@ -49,13 +49,13 @@ color_map<-function(labels)
   new_color=list("map"=new_color,"color"=unlist(new_color),"labels"=names(new_color))
   return(new_color)
 }
-##' @title A rank based approach to modeling gene expression with filtered and normalized read count matrix
-##' @description Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
-##' @param matrix_1 The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name
-##' @param matrix_2 Labels for the two sub-populations
-##' @param matrix_3 Labels for the two sub-populations
-##' @param survival_info optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation
-##' @return filtered_matrix pValues A vector containing FDR adjusted p significance values
+##' @title filtering matrices on the bass of common row and columns
+##' @description requires four matrices two for single cell and one for bulk, and  one for survival info to filter on same samples and features
+##' @param matrix_1 zfpkm single sell matrix
+##' @param matrix_2 tpm single cell matrix, same samples as in matrix_1
+##' @param matrix_3 tpm bulk TCGA matrix
+##' @param survival_info survival info as two vector matrix, first vector as time and secondd as event
+##' @return filtered_matrix would return list of all matrices on common row as columns names
 matrix_filter<-function(matrix_1,matrix_2,matrix_3,survival_info)
 {
   common_ors=intersect(rownames(matrix_1),rownames(matrix_2))
@@ -101,11 +101,11 @@ matrix_filter<-function(matrix_1,matrix_2,matrix_3,survival_info)
   return(filtered_matrix)
 }
 
-##' @title A rank based approach to modeling gene expression with filtered and normalized read count matrix
-##' @description Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
-##' @param mat The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name
-##' @param t Labels for the two sub-populations
-##' @return label pValues A vector containing FDR adjusted p significance values
+##' @title numeric to binary conversion
+##' @description Trequires matrix and cutoff as t for to convert numeric to binary matrix
+##' @param mat numeric matrix
+##' @param t cutoff for 0 and 1
+##' @return mat would return binary matrix
 num2bin<-function(mat,t=-3) # here t should be less then 1
 {
   mat_1=mat
@@ -117,15 +117,14 @@ num2bin<-function(mat,t=-3) # here t should be less then 1
   return(mat)
 }
 
-##' @title A rank based approach to modeling gene expression with filtered and normalized read count matrix
-##' @description Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
-##' @param folder The normalised and filtered, read count matrix, with row names
-##' @param mat The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name
-##' @param t Labels for the two sub-populations
-##' @param name Labels for the two sub-populations
-##' @param label_2 optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation
-##' @return label pValues A vector containing FDR adjusted p significance values
-cluster_label<-function(folder,mat,t=3,name="EXP",label_2)
+##' @title find cluster's label on columns of matrix
+##' @description It requires two matrix and number of clusters to cluster's label on columns of matrix
+##' @param folder dir to save pdf files
+##' @param mat matrix to clusters on columns
+##' @param t number of desire clusters, dendrogram would cut at t depth
+##' @param name name to save pdf file
+##' @return label would return cluster's label
+cluster_label<-function(folder="pdf",mat,t=3,name="EXP")
 {
 
   heatmap_info=pheatmap::pheatmap(mat,cluster_rows=F)
@@ -148,11 +147,11 @@ cluster_label<-function(folder,mat,t=3,name="EXP",label_2)
   heatmap_info=NMF::aheatmap(mat,annCol = col_annotation,labCol = "",color = factor(c("grey","#556b2f")),file=paste(folder,name,"_binary.pdf",sep=""), annColors=ann_colors)
   return(label)
 }
-##' @title A rank based approach to modeling gene expression with filtered and normalized read count matrix
-##' @description Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
-##' @param mat The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name
-##' @param label for the two sub-populations
-##' @return sigmat pValues A vector containing FDR adjusted p significance values
+##' @title To find average of each label group
+##' @description It require number of column of mat equlal to label vector size
+##' @param mat matrix for averaging
+##' @param label a vector contains labels for each group
+##' @return sigmat return matrix of average vectors
 signature_matrix<-function(mat,label)
 {
   unique_label<-unique(label)
@@ -172,12 +171,12 @@ signature_matrix<-function(mat,label)
   return(sig_mat)
 }
 
-##' @title A rank based approach to modeling gene expression with filtered and normalized read count matrix
-##' @description Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
-##' @param mat_1 The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name
-##' @param mat_2 Labels for the two sub-populations
-##' @param method optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation
-##' @return mat_3 pValues A vector containing FDR adjusted p significance values
+##' @title finding pair-wise similarity of two matrices in three differnt ways
+##' @description requires two matrix and method to find pair-wise similarity
+##' @param mat_1 First matirx
+##' @param mat_2 Second matirx
+##' @param method three options cosine, cor, and hamming default cosine
+##' @return mat_3 would return pair-wise similarity
 distance_matrix<-function(mat_1,mat_2, method="cosine")
 {
   mat_3=matrix(0,nrow = dim(mat_1)[2],ncol=dim(mat_2)[2])
@@ -216,21 +215,20 @@ distance_matrix<-function(mat_1,mat_2, method="cosine")
   return(mat_3)
 }
 
-##' @title A rank based approach to modeling gene expression with filtered and normalized read count matrix
-##' @description Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
-##' @param folder The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name
-##' @param mat The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name
+##' @title Survival plots
+##' @description requires projected matrix and survival info to plot survival and relevent plots
+##' @param folder dir name to save pdf files
+##' @param mat prjected matrix getting after project of single cells and bulk TCGA data
 ##' @param mat_2 Labels for the two sub-populations
-##' @param s optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation
-##' @param t Labels for the two sub-populations
-##' @param name2 Labels for the two sub-populations
-##' @param name3 optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation
-##' @param month_limit Labels for the two sub-populations
-##' @param p_limit optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation
-##' @param selected_label The number of cores to be used
-##' @return surv_plot pValues A vector containing FDR adjusted p significance values
-##' @export surv_med
-survival_plot<-function(folder,mat,mat_2,s,t=3,name2="EXP_TCGA",name3="Survival_plot",month_limit,p_limit, selected_label)
+##' @param s survival info
+##' @param t number of cluster
+##' @param name2 specific for combine nameof single cell and bulk dataset names
+##' @param name3 name for survival plots
+##' @param month_limit keeping survival info till specfic months, means number of months
+##' @param p_limit therosld to selecte clusters where pair-wise p val is less
+##' @param selected_label to pass already known cluster names out of all clusters
+##' @return surv_med would return median of each surv curve
+survival_plot<-function(folder="pdf",mat,mat_2,s,t=3,name2="EXP_TCGA",name3="Survival_plot",month_limit,p_limit, selected_label)
 {
   ss=s
   ss[,1]=ss[,1]/30

@@ -2,18 +2,18 @@
 % Please edit documentation in R/ORsurv.R
 \name{num2bin}
 \alias{num2bin}
-\title{A rank based approach to modeling gene expression with filtered and normalized read count matrix}
+\title{numeric to binary conversion}
 \usage{
 num2bin(mat, t = -3)
 }
 \arguments{
-\item{mat}{The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name}
+\item{mat}{numeric matrix}
 
-\item{t}{Labels for the two sub-populations}
+\item{t}{cutoff for 0 and 1}
 }
 \value{
-label pValues A vector containing FDR adjusted p significance values
+mat would return binary matrix
 }
 \description{
-Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
+Trequires matrix and cutoff as t for to convert numeric to binary matrix
 }

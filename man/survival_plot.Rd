@@ -2,10 +2,10 @@
 % Please edit documentation in R/ORsurv.R
 \name{survival_plot}
 \alias{survival_plot}
-\title{A rank based approach to modeling gene expression with filtered and normalized read count matrix}
+\title{Survival plots}
 \usage{
 survival_plot(
-  folder,
+  folder = "pdf",
   mat,
   mat_2,
   s,
@@ -18,29 +18,29 @@ survival_plot(
 )
 }
 \arguments{
-\item{folder}{The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name}
+\item{folder}{dir name to save pdf files}
 
-\item{mat}{The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name}
+\item{mat}{prjected matrix getting after project of single cells and bulk TCGA data}
 
 \item{mat_2}{Labels for the two sub-populations}
 
-\item{s}{optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation}
+\item{s}{survival info}
 
-\item{t}{Labels for the two sub-populations}
+\item{t}{number of cluster}
 
-\item{name2}{Labels for the two sub-populations}
+\item{name2}{specific for combine nameof single cell and bulk dataset names}
 
-\item{name3}{optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation}
+\item{name3}{name for survival plots}
 
-\item{month_limit}{Labels for the two sub-populations}
+\item{month_limit}{keeping survival info till specfic months, means number of months}
 
-\item{p_limit}{optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation}
+\item{p_limit}{therosld to selecte clusters where pair-wise p val is less}
 
-\item{selected_label}{The number of cores to be used}
+\item{selected_label}{to pass already known cluster names out of all clusters}
 }
 \value{
-surv_plot pValues A vector containing FDR adjusted p significance values
+surv_med would return median of each surv curve
 }
 \description{
-Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
+requires projected matrix and survival info to plot survival and relevent plots
 }

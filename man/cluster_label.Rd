@@ -2,24 +2,22 @@
 % Please edit documentation in R/ORsurv.R
 \name{cluster_label}
 \alias{cluster_label}
-\title{A rank based approach to modeling gene expression with filtered and normalized read count matrix}
+\title{find cluster's label on columns of matrix}
 \usage{
-cluster_label(folder, mat, t = 3, name = "EXP", label_2)
+cluster_label(folder = "pdf", mat, t = 3, name = "EXP")
 }
 \arguments{
-\item{folder}{The normalised and filtered, read count matrix, with row names}
+\item{folder}{dir to save pdf files}
 
-\item{mat}{The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name}
+\item{mat}{matrix to clusters on columns}
 
-\item{t}{Labels for the two sub-populations}
+\item{t}{number of desire clusters, dendrogram would cut at t depth}
 
-\item{name}{Labels for the two sub-populations}
-
-\item{label_2}{optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation}
+\item{name}{name to save pdf file}
 }
 \value{
-label pValues A vector containing FDR adjusted p significance values
+label would return cluster's label
 }
 \description{
-Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
+It requires two matrix and number of clusters to cluster's label on columns of matrix
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/ORsurv.R
 \name{ORsurv}
 \alias{ORsurv}
-\title{A rank based approach to modeling gene expression with filtered and normalized read count matrix}
+\title{survival of patients using ors on TCGA data}
 \usage{
 ORsurv(
   folder,
@@ -23,39 +23,39 @@ ORsurv(
 )
 }
 \arguments{
-\item{folder}{The normalised and filtered}
+\item{folder}{dir name to save pdf files}
 
-\item{matrix_1}{The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name}
+\item{matrix_1}{zfpkm single sell matrix}
 
-\item{matrix_2}{Labels for the two sub-populations}
+\item{matrix_2}{tpm single cell matrix, same samples as in matrix_1}
 
-\item{matrix_3}{optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation}
+\item{matrix_3}{tpm bulk TCGA matrix}
 
-\item{t1}{Labels for the two sub-populations}
+\item{t1}{cutoff for 0 and 1}
 
-\item{t2}{optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation}
+\item{t2}{number of clusters on bianry matrix of single cell zfpkm}
 
-\item{t3}{The number of cores to be used}
+\item{t3}{number of clusters on projected matrix of single cells and bulk cells}
 
-\item{name1}{The number of cores to be used}
+\item{name1}{for binary matrix}
 
-\item{name2}{Labels for the two sub-populations}
+\item{name2}{for projected matrix plots}
 
-\item{name3}{optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation}
+\item{name3}{for survival plots}
 
-\item{survival_info}{The number of cores to be used}
+\item{survival_info}{for survival info}
 
-\item{method}{The number of cores to be used}
+\item{method}{for pair-wise similarity method name}
 
-\item{month_limit}{Labels for the two sub-populations}
+\item{month_limit}{keeping survival info till specfic months, means number of months}
 
-\item{p_limit}{optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation}
+\item{p_limit}{therosld to selecte clusters where pair-wise p val is less}
 
-\item{selected_label}{The number of cores to be used}
+\item{selected_label}{to pass already known cluster names out of all clusters}
 }
 \value{
 surv_plot pValues A vector containing FDR adjusted p significance values
 }
 \description{
-Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
+survival of patients using ors on TCGA data
 }

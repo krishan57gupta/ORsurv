@@ -2,18 +2,18 @@
 % Please edit documentation in R/ORsurv.R
 \name{cosine_formula}
 \alias{cosine_formula}
-\title{A rank based approach to modeling gene expression with filtered and normalized read count matrix}
+\title{cosine similarity formula}
 \usage{
 cosine_formula(A, B)
 }
 \arguments{
-\item{A}{optional, 10 as more accuracy}
+\item{A}{Second matrix}
 
-\item{B}{optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation}
+\item{B}{First matrix}
 }
 \value{
-cos_sim pValues A vector containing FDR adjusted p significance values
+cos_sim would return a matrix of pair-wise cosine similarity
 }
 \description{
-Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
+requires two matrices to find pair-wise cosine similarity
 }

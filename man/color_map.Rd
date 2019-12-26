@@ -2,16 +2,16 @@
 % Please edit documentation in R/ORsurv.R
 \name{color_map}
 \alias{color_map}
-\title{A rank based approach to modeling gene expression with filtered and normalized read count matrix}
+\title{finding colours for labels}
 \usage{
 color_map(labels)
 }
 \arguments{
-\item{labels}{optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation}
+\item{labels}{labels to which colours is required}
 }
 \value{
-new_color pValues A vector containing FDR adjusted p significance values
+new_color would return list of colurs on the basis number labels'colour required
 }
 \description{
-Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
+requirs labels to find colors for same
 }

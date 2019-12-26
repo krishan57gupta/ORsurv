@@ -2,20 +2,20 @@
 % Please edit documentation in R/ORsurv.R
 \name{distance_matrix}
 \alias{distance_matrix}
-\title{A rank based approach to modeling gene expression with filtered and normalized read count matrix}
+\title{finding pair-wise similarity of two matrices in three differnt ways}
 \usage{
 distance_matrix(mat_1, mat_2, method = "cosine")
 }
 \arguments{
-\item{mat_1}{The normalised and filtered, read count matrix, with row names as genes name/ID and column names as sample id/name}
+\item{mat_1}{First matirx}
 
-\item{mat_2}{Labels for the two sub-populations}
+\item{mat_2}{Second matirx}
 
-\item{method}{optional, 10 as more accuracy with little slow (calculation on big number, Rmpfr library used), default is 0, means no Rmpfr library used for calculation}
+\item{method}{three options cosine, cor, and hamming default cosine}
 }
 \value{
-mat_3 pValues A vector containing FDR adjusted p significance values
+mat_3 would return pair-wise similarity
 }
 \description{
-Takes in the complete filtered and normalized read count matrix, the location of the two sub-populations and the number of cores to be used
+requires two matrix and method to find pair-wise similarity
 }
